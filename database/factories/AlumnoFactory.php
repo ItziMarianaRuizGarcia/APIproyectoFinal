@@ -25,7 +25,7 @@ class AlumnoFactory extends Factory
             'nombres' => $nombres,
             'apellidoP' => $apellidoP,
             'apellidoM' => $apellidoM,
-            'correo' => strtolower("$nombres.$apellidoP@correo.com"),
+            'correo' => strtolower("$nombres.$apellidoP@gmail.com"),
             'contraseña' => $this->faker->password($minLength = 6, $maxLength = 15),
             'inscrito' => false,
         ];

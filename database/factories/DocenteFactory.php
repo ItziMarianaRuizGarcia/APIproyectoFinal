@@ -16,12 +16,15 @@ class DocenteFactory extends Factory
      */
     public function definition(): array
     {
+        $nombres = $this->faker->firstName();
+        $apellidoP = $this->faker->lastName();
+        $apellidoM = $this->faker->lastName();
         return [
-            'nombres' => $this->faker->firstName(),
-            'apellidoP'=>$this->faker->lastName(),
-            'apellidoM'=>$this->faker->lastName(),
+            'nombres' => $nombres,
+            'apellidoP' => $apellidoP,
+            'apellidoM' => $apellidoM,
             'id_departamento'=> $this->faker->numberBetween(1, 11), 
-            'correo'=>$this->faker->safeEmail(),
+            'correo' => strtolower("$nombres.$apellidoP@gmail.com"),
             'contraseña'=>$this->faker->password(($minLength = 6),($maxLength = 15)),
         ];
     }
