@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('inscripcions', function (Blueprint $table) {
             $table->id();
-            $table->integer('numeroControl');
+            $table->string('numeroControl');
             $table->unsignedBigInteger('id_actividad');
             $table->timestamps();
             $table->foreign('numeroControl')->references('numeroControl')->on('alumnos')->onDelete('cascade');  // Add 'onDelete' if needed

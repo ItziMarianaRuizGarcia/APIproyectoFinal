@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Inscripcion extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['id_actividad','numeroControl'];
+
+    protected $hidden = ['created_at','updated_at'];
 }

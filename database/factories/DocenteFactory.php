@@ -25,7 +25,7 @@ class DocenteFactory extends Factory
             'apellidoM' => $apellidoM,
             'id_departamento'=> $this->faker->numberBetween(1, 11), 
             'correo' => strtolower("$nombres.$apellidoP@gmail.com"),
-            'contraseña'=>$this->faker->password(($minLength = 6),($maxLength = 15)),
+            'contrasena'=>$this->faker->password(($minLength = 6),($maxLength = 15)),
         ];
     }
 }

@@ -16,62 +16,48 @@ class DocenteController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'id'=>'required',
-            'nombres'=> 'required',
-            'apellidoP' => 'required',
-            'apellidoM' => 'required',
-            'id_departamento'=> 'required',
-            'correo' => 'required',
-            'contraseña' => 'required'
-        ]);
-        $docente = new Docente;
-        $docente->id=$request->id;
-        $docente->nombres=$request->nombres;
-        $docente->apellidoP=$request->apellidoP;
-        $docente->apellidoM=$request->apellidoM;
-        $docente->id_departamento=$request->id_departamento;
-        $docente->correo=$request->correo;
-        $docente->contraseña=$request->contraseña;
-        $docente->save();
-        return $docente;
+        try {
+            // Tu lógica aquí
+            Docente::create($request->all());
+            return response()->json([
+                'res' => true,
+                'msg' => 'Docente registrado correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            // Manejo de errores
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function show(Docente $docente)
     {
-        return $docente;
+        return response()->json([
+            'res' => true,
+            'alumno' => $docente
+        ]);
     }
 
     public function update(Request $request, Docente $docente)
     {
-        $request->validate([
-            'id'=>'required',
-            'nombres'=> 'required',
-            'apellidoP' => 'required',
-            'apellidoM' => 'required',
-            'id_departamento'=> 'required',
-            'correo' => 'required',
-            'contraseña' => 'required'
-        ]);
-        $docente = new Docente;
-        $docente->id=$request->id;
-        $docente->nombres=$request->nombres;
-        $docente->apellidoP=$request->apellidoP;
-        $docente->apellidoM=$request->apellidoM;
-        $docente->id_departamento=$request->id_departamento;
-        $docente->correo=$request->correo;
-        $docente->contraseña=$request->contraseña;
-        $docente->update();
-        return $docente;
+        try {
+            // Tu lógica aquí
+            $docente->update($request->all());
+            return response()->json([
+                'res' => true,
+                'msg' => 'Docente actualizado correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            // Manejo de errores
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
-    public function destroy($id)
+    public function destroy($docente)
     {
-        $docente = Docente::find($id);
-        if(is_Null($docente)){
-            return response()->json('No se encontró docente con ese identificador',404);
-        }
         $docente->delete();
-        return response()->noContent();
+        return response()->json([
+            'res' => true,
+            'msg' => 'Docente eliminado correctamente'
+        ], 200);
     }
 }

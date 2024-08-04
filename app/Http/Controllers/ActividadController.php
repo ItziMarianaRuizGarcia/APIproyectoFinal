@@ -16,54 +16,48 @@ class ActividadController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'id'=>'required',
-            'nombre'=> 'required',
-            'dia' => 'required',
-            'hora' => 'required',
-            'id_docente' => 'required',
-        ]);
-        $actividad = new Actividad;
-        $actividad->id=$request->id;
-        $actividad->nombre=$request->nombre;
-        $actividad->dia=$request->dia;
-        $actividad->hora=$request->hora;
-        $actividad->id_docente=$request->id_docente;
-        $actividad->save();
-        return $actividad;
+        try {
+            // Tu lógica aquí
+            Actividad::create($request->all());
+            return response()->json([
+                'res' => true,
+                'msg' => 'Actividad registrada correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            // Manejo de errores
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function show(Actividad $actividad)
     {
-        return $actividad;
+        return response()->json([
+            'res' => true,
+            'alumno' => $actividad
+        ]);
     }
 
     public function update(Request $request, Actividad $actividad)
     {
-        $request->validate([
-            'id'=>'required',
-            'nombre'=> 'required',
-            'dia' => 'required',
-            'hora' => 'required',
-            'id_docente' => 'required',
-        ]);
-        $actividad = new Actividad;
-        $actividad->id=$request->id;
-        $actividad->nombre=$request->nombre;
-        $actividad->dia=$request->dia;
-        $actividad->hora=$request->hora;
-        $actividad->id_docente=$request->id_docente;
-        $actividad->update();
-        return $actividad;
+        try {
+            // Tu lógica aquí
+            $actividad->update($request->all());
+            return response()->json([
+                'res' => true,
+                'msg' => 'Actividad actualizada correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            // Manejo de errores
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
-    public function destroy($id)
+    public function destroy(Actividad $actividad)
     {
-        $actividad = Actividad::find($id);
-        if(is_Null($actividad)){
-            return response()->json('No se encontró actividad con ese identificador',404);
-        }
         $actividad->delete();
-        return response()->noContent();
+        return response()->json([
+            'res' => true,
+            'msg' => 'Actividad eliminada correctamente'
+        ], 200);
     }
 }

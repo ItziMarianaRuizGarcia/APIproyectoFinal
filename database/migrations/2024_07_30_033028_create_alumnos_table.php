@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('alumnos', function (Blueprint $table) {
             $table->id();
-            $table->integer('numeroControl')->unique(); 
+            $table->string('numeroControl',8)->unique(); 
             $table->string('nombres');
             $table->string('apellidoP');
             $table->string('apellidoM');
             $table->string('correo')->unique(); 
-            $table->string('contraseña');
-            $table->boolean('inscrito');
+            $table->string('contrasena');
+            $table->string('inscrito');
             $table->timestamps();
         });
     }

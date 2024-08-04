@@ -16,42 +16,48 @@ class DepartamentoController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'id'=>'required',
-            'nombre'=> 'required'
-        ]);
-        $departamento = new departamento;
-        $departamento->id=$request->id;
-        $departamento->nombre=$request->nombre;
-        $departamento->save();
-        return $departamento;
+        try {
+            // Tu lógica aquí
+            Departamento::create($request->all());
+            return response()->json([
+                'res' => true,
+                'msg' => 'departamento registrado correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            // Manejo de errores
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function show(Departamento $departamento)
     {
-        return $departamento;
+        return response()->json([
+            'res' => true,
+            'departamento' => $departamento
+        ]);
     }
 
     public function update(Request $request, Departamento $departamento)
     {
-        $request->validate([
-            'id'=>'required',
-            'nombre'=> 'required'
-        ]);
-        $departamento = new departamento;
-        $departamento->id=$request->id;
-        $departamento->nombre=$request->nombre;
-        $departamento->update();
-        return $departamento;
+        try {
+            // Tu lógica aquí
+            $departamento->update($request->all());
+            return response()->json([
+                'res' => true,
+                'msg' => 'Departamento actualizado correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            // Manejo de errores
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
-    public function destroy($id)
+    public function destroy(Departamento $departamento)
     {
-        $departamento = Departamento::find($id);
-        if(is_Null($departamento)){
-            return response()->json('No se encontró departamento con ese identificador',404);
-        }
         $departamento->delete();
-        return response()->noContent();   
+        return response()->json([
+            'res' => true,
+            'msg' => 'Departamento eliminado correctamente'
+        ], 200);   
     }
 }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('apellidoM');
             $table->unsignedBigInteger('id_departamento');
             $table->string('correo');
-            $table->string('contraseña');
+            $table->string('contrasena');
             $table->timestamps();
             $table->foreign('id_departamento')->references('id')->on('departamentos')->onDelete('cascade');  // Add 'onDelete' if needed
         });

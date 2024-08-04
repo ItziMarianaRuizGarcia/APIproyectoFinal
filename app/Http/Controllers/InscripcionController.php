@@ -14,42 +14,48 @@ class InscripcionController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'numeroControl'=>'required',
-            'id_actividad'=> 'required'
-        ]);
-        $inscripcion = new Inscripcion;
-        $inscripcion->numeroControl=$request->numeroControl;
-        $inscripcion->id_actividad=$request->id_actividad;
-        $inscripcion->save();
-        return $inscripcion;
+        try {
+            // Tu lógica aquí
+            Inscripcion::create($request->all());
+            return response()->json([
+                'res' => true,
+                'msg' => 'Inscripción registrada correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            // Manejo de errores
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function show(Inscripcion $inscripcion)
     {
-        return $inscripcion;
+        return response()->json([
+            'res' => true,
+            'alumno' => $inscripcion
+        ]);
     }
 
     public function update(Request $request, Inscripcion $inscripcion)
     {
-        $request->validate([
-            'numeroControl'=>'required',
-            'id_actividad'=> 'required'
-        ]);
-        $inscripcion = new Inscripcion;
-        $inscripcion->numeroControl=$request->numeroControl;
-        $inscripcion->id_actividad=$request->id_actividad;
-        $inscripcion->update();
-        return $inscripcion;
+        try {
+            // Tu lógica aquí
+            $inscripcion->update($request->all());
+            return response()->json([
+                'res' => true,
+                'msg' => 'Inscripción actualizada correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            // Manejo de errores
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
-    public function destroy($id)
+    public function destroy(Inscripcion $inscripcion)
     {
-        $inscripcion = Inscripcion::find($id);
-        if(is_Null($inscripcion)){
-            return response()->json('No se encontró inscripcion con ese identificador',404);
-        }
         $inscripcion->delete();
-        return response()->noContent();
+        return response()->json([
+            'res' => true,
+            'msg' => 'Inscripción eliminada correctamente'
+        ], 200);
     }
 }

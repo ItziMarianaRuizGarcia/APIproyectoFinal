@@ -16,60 +16,49 @@ class AlumnoController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'numeroControl'=>'required',
-            'nombres'=> 'required',
-            'apellidoP' => 'required',
-            'apellidoM' => 'required',
-            'correo' => 'required',
-            'contraseña' => 'required',
-        ]);
-        $alumno = new Alumno;
-        $alumno->numeroControl=$request->numeroControl;
-        $alumno->nombres=$request->nombres;
-        $alumno->apellidoP=$request->apellidoP;
-        $alumno->apellidoM=$request->apellidoM;
-        $alumno->correo=$request->correo;
-        $alumno->contraseña=$request->contraseña;
-        $alumno->inscrito=false;
-        $alumno->save();
-        return $alumno;
+        try {
+            // Tu lógica aquí
+            Alumno::create($request->all());
+            return response()->json([
+                'res' => true,
+                'msg' => 'Alumno registrado correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            // Manejo de errores
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function show(Alumno $alumno)
     {
-        return $alumno;
+        // return response()->json([
+        //     'res' => true,
+        //     'alumno' => $alumno
+        // ]);
+        return  $alumno;
     }
 
     public function update(Request $request, Alumno $alumno)
     {
-        $request->validate([
-            'numeroControl'=>'required',
-            'nombres'=> 'required',
-            'apellidoP' => 'required',
-            'apellidoM' => 'required',
-            'correo' => 'required',
-            'contraseña' => 'required',
-            'inscrito' => 'required'
-        ]);
-        $alumno->numeroControl=$request->numeroControl;
-        $alumno->nombres=$request->nombres;
-        $alumno->apellidoP=$request->apellidoP;
-        $alumno->apellidoM=$request->apellidoM;
-        $alumno->correo=$request->correo;
-        $alumno->contraseña=$request->contraseña;
-        $alumno->inscrito=$request->inscrito;
-        $alumno->update();
-        return $alumno;
+        try {
+            // Tu lógica aquí
+            $alumno->update($request->all());
+            return response()->json([
+                'res' => true,
+                'msg' => 'Alumno actualizado correctamente'
+            ], 200);
+        } catch (\Exception $e) {
+            // Manejo de errores
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
-    public function destroy($id)
+    public function destroy(Alumno $alumno)
     {
-        $alumno = Alumno::find($id);
-        if(is_Null($alumno)){
-            return response()->json('No se encontró alumno con ese identificador',404);
-        }
         $alumno->delete();
-        return response()->noContent();
+        return response()->json([
+            'res' => true,
+            'msg' => 'Alumno eliminado correctamente'
+        ], 200);
     }
 }
